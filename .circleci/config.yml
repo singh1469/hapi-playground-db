@@ -1,0 +1,27 @@
+version: 2
+jobs:
+  build:
+    working_directory: ~/hapi-playground-db
+    docker:
+      - image: docker:stable-git
+    steps:
+      - setup_remote_docker
+      - checkout
+      - run:
+          name: Build artifact
+          command: |
+            TAG=0.1.$CIRCLE_BUILD_NUM
+            docker build -t singh1469/hapi-playground-db:$TAG .
+            docker login -u $DOCKER_USER -p $DOCKER_PASS
+            docker push singh1469/hapi-playground-db:$TAG
+
+workflows:
+  version: 2
+  lint_and_build:
+    jobs:
+      - build:
+          context: docker-hub
+          filters:
+            branches:
+              only:
+                - master

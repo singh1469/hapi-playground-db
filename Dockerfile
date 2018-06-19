@@ -7,6 +7,6 @@ ENV APP_DB_NAME=app
 ENV APP_USERNAME=username
 ENV APP_PASSWORD=password
 
-COPY init.sh /docker-entrypoint-initdb.d/init.sh
+COPY init/init.sh /docker-entrypoint-initdb.d/init.sh
 
 EXPOSE 27017
